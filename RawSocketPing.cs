@@ -36,9 +36,7 @@ namespace NetduinoPlusApplication1
             pingReceiveTimeout = 2000;
             destEndPoint = new IPEndPoint(IPAddress.Loopback, 0);
             icmpHeader = null;
-
         }
-
         /// <summary>
         /// Constructor that overrides several members of the ping packet such as TTL,
         /// payload length, ping ID, etc.
@@ -48,21 +46,13 @@ namespace NetduinoPlusApplication1
         /// <param name="payloadSize">Number of bytes in ping payload</param>
         /// <param name="sendCount">Number of times to send a ping request</param>
         /// <param name="idValue">ID value to put into ping header</param>
-        public RawSocketPing(
-            int ttlValue,
-            int payloadSize,
-            int sendCount,
-            ushort idValue
-            )
-            : this()
+        public RawSocketPing(int ttlValue,int payloadSize,int sendCount,ushort idValue): this()
         {
             pingTtl = ttlValue;
             pingPayloadLength = payloadSize;
             pingCount = sendCount;
             pingId = idValue;
-
         }
-
         /// <summary>
         /// This routine is called when the calling application is done with the ping class.
         /// This routine closes any open resource such as socket handles.
@@ -71,7 +61,6 @@ namespace NetduinoPlusApplication1
         {
             try
             {
-                
                 if (pingSocket != null)
                 {
                     pingSocket.Close();
@@ -80,8 +69,7 @@ namespace NetduinoPlusApplication1
             }
             catch (Exception err)
             {
-                
-                throw;
+                //throw;
             }
         }
 
@@ -187,20 +175,20 @@ namespace NetduinoPlusApplication1
 
                     // Send the echo request
                     pingSocket.SendTo(pingPacket, destEndPoint);
-                    int Brecieved = pingSocket.ReceiveFrom(receiveBuffer,0,receiveBuffer.Length,SocketFlags.None,ref castResponseEndPoint);
-                    
+                    int Brecieved = pingSocket.ReceiveFrom(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ref castResponseEndPoint);
+
                     //IF you get to here, then you got a response.
                     //if (pingId.Equals(123))
-                        success = true;
+                    success = true;
                     //else
-                      //  success = false;
+                    //  success = false;
 
                     break;
-                    
+
                 }
                 catch (SocketException  err)
                 {
-                    //PING FAILED, try it again for remaining ping counts
+                //PING FAILED, try it again for remaining ping counts
                 }
             }
             return success;    
